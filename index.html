@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moto ads | Convierte motos en Vallas Publicitarias Móviles</title>
+  <meta name="description" content="MVP de acceso anticipado: Anúnciate en motos de reparto o gana dinero extra llevando publicidad. Únete a la lista de espera hoy.">
+  <style>
+    :root {
+      --primary: #0F172A;
+      --accent: #6b5cff;
+      --accent-hover: #3c26ff;
+      --bg: #F8FAFC;
+      --surface: #FFFFFF;
+      --text: #334155;
+      --text-light: #64748B;
+      --border: #E2E8F0;
+      --success: #10B981;
+      --radius: 8px;
+      --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.5px; }
+    .badge {
+      background: var(--accent);
+      color: white;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 8px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .hero {
+      padding: 60px 0 40px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+    }
+    .hero h1 { font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 16px; color: var(--primary); line-height: 1.2; }
+    .hero p { font-size: 1.1rem; color: var(--text-light); max-width: 600px; margin: 0 auto 24px; }
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: var(--shadow);
+    }
+    .cta-btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
+
+    section { padding: 50px 0; }
+    .section-title { text-align: center; margin-bottom: 30px; }
+    .section-title h2 { font-size: 1.8rem; color: var(--primary); margin-bottom: 8px; }
+    .section-title p { color: var(--text-light); max-width: 650px; margin: 0 auto; }
+
+    .audience { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .audience-grid { display: grid; gap: 30px; grid-template-columns: 1fr 1fr; }
+    .audience-block { text-align: center; padding: 20px; }
+    .audience-block.primary { border-right: 1px solid var(--border); }
+    .tag { display: inline-block; background: #EEF2FF; color: #3B82F6; font-size: 0.75rem; padding: 4px 8px; border-radius: 4px; margin-bottom: 10px; font-weight: 600; }
+    .tag.rider { background: #ECFDF5; color: #059669; }
+
+    .form-card {
+      background: var(--surface);
+      padding: 30px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .role-toggle {
+      display: flex;
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 4px;
+      margin-bottom: 20px;
+    }
+    .role-toggle label {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    .role-toggle input { display: none; }
+    .role-toggle input:checked + label { background: var(--accent); color: white; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      transition: border 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); }
+    .submit-btn {
+      width: 100%;
+      background: var(--accent-hover);
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .submit-btn:hover { background: #1E293B; }
+    .success-msg {
+      display: none;
+      background: #ECFDF5;
+      color: #065F46;
+      padding: 16px;
+      border-radius: var(--radius);
+      text-align: center;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    footer { text-align: center; padding: 30px 0; color: var(--text-light); font-size: 0.85rem; border-top: 1px solid var(--border); }
+
+    @media (max-width: 700px) {
+      .audience-grid { grid-template-columns: 1fr; }
+      .audience-block.primary { border-right: none; border-bottom: 1px solid var(--border); }
+      .hero { padding: 40px 0 30px; }
+      section { padding: 40px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container header-inner">
+      <div class="logo">Moto Ads <span class="badge">Beta</span></div>
+      <nav><a href="#waitlist" class="cta-btn" style="padding: 8px 16px; font-size: 0.9rem;">Unirme a la Lista</a></nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>CONVIERTE CADA MOTO EN UN ESPACIO PUBLICITARIO</h1>
+        <p>Obtén alcance hiperlocal con anuncios de alta visibilidad en motos de reparto. ¿Eres repartidor? únete y gana ingresos pasivos sin trabajo extra.</p>
+        <a href="#waitlist" class="cta-btn">Obtener Acceso Anticipado</a>
+      </div>
+    </section>
+
+    <section class="audience">
+      <div class="container audience-grid">
+        <div class="audience-block primary">
+          <span class="tag">Para Anunciantes</span>
+          <h3>Lanza Tu Primera Campaña en Motos</h3>
+          <p>Sé de los primeros en tener publicidad segmentada por ruta y por barrio, a una fracción del costo de la publicidad exterior tradicional. Que tus clientes te vean en todos lados.</p>
+        </div>
+        <div class="audience-block">
+          <span class="tag rider">Para Repartidores</span>
+          <h3>Gana Más Trabajando Menos</h3>
+          <p>Coloca anuncios ligeros y resistentes al clima en tu moto. Sigue repartiendo como siempre. Recibe pagos semanales basados en la actividad de tu ruta y los escaneos QR, sin paradas extra.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="waitlist">
+      <div class="container">
+        <div class="section-title">
+          <h2>Únete a la Lista de Espera</h2>
+          <p>Estamos incorporando nuestros primeros 50 anunciantes y 100 repartidores en 2026. Asegura tu lugar ahora.</p>
+          <p>📍 <em>Zona Metropolitana de Guadalajara, Jal.</em></p>
+          <p>📍 <em>Monterrey, NL.</em></p>
+          <p>📍 <em>Querétaro, Qro.</em></p>
+        </div>
+
+        <div class="form-card">
+          <div class="role-toggle">
+            <input type="radio" id="role-ad" name="role-ui" value="advertiser" checked>
+            <label for="role-ad">🏢 Anunciante</label>
+            <input type="radio" id="role-rider" name="role-ui" value="rider">
+            <label for="role-rider">🛵 Repartidor</label>
+          </div>
+
+          <!-- El iframe atrapa la respuesta de Google para que la página no redirija -->
+          <iframe name="hidden-iframe" style="display:none"></iframe>
+
+          <form id="waitlist-form"
+            action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSeuWxtkIqakaS1_FYUIxsC-aCC8v15zGiKbN3f7S5Q3GIfu_w/formResponse"
+            method="POST"
+            target="hidden-iframe">
+
+            <!-- Campo oculto que envía el Rol al Google Form -->
+            <!-- ⚠️ REEMPLAZA entry.XXXXXXXXX con el entry ID de tu campo "Rol" en Google Forms -->
+            <input type="hidden" id="rol-hidden" name="entry.367802066" value="Anunciante">
+
+            <div class="form-group">
+              <label for="name">Nombre Completo</label>
+              <input type="text" id="name" name="entry.1909456956" placeholder="Juan Pérez" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Correo Electrónico</label>
+              <input type="email" id="email" name="entry.316160149" placeholder="juan@empresa.com" required>
+            </div>
+            <div class="form-group" id="company-group">
+              <label for="company">Empresa / Marca</label>
+              <input type="text" id="company" name="entry.41054080" placeholder="Ej. Acme S.A.">
+            </div>
+            <div class="form-group" id="city-group">
+              <label for="city">Ciudad / Zona de Operación</label>
+              <input type="text" id="city" name="entry.1281562879" placeholder="Ej. Centro, Área Metropolitana" required>
+            </div>
+            <div class="form-group">
+              <label for="notes">Notas (Opcional)</label>
+              <textarea id="notes" name="entry.1717009786" rows="3" placeholder="Cuéntanos sobre tu volumen de entregas, presupuesto u objetivos de campaña..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submit-btn">🚀 Unirme a la Lista de Anunciantes</button>
+          </form>
+
+          <div class="success-msg" id="success-msg">✅ ¡Gracias! Estás en la lista. Te contactaremos en 48 horas con los siguientes pasos.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year"></span> Moto ads. Todos los derechos reservados.</p>
+      <p style="margin-top: 6px; font-size: 0.8rem;">Este es un MVP activo. Escaneado vía QR en una moto de reparto real. Gracias por probar el futuro de la publicidad móvil.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const roleAd     = document.getElementById('role-ad');
+    const roleRider  = document.getElementById('role-rider');
+    const submitBtn  = document.getElementById('submit-btn');
+    const companyGroup = document.getElementById('company-group');
+    const companyInput = document.getElementById('company');
+    const rolHidden  = document.getElementById('rol-hidden');
+    const form       = document.getElementById('waitlist-form');
+    const successMsg = document.getElementById('success-msg');
+
+    function updateForm() {
+      if (roleRider.checked) {
+        submitBtn.textContent  = '🛵 Unirme a la Lista de Repartidores';
+        rolHidden.value        = 'Repartidor';
+        companyInput.required  = false;
+        companyGroup.style.display = 'none';
+      } else {
+        submitBtn.textContent  = '🚀 Unirme a la Lista de Anunciantes';
+        rolHidden.value        = 'Anunciante';
+        companyInput.required  = true;
+        companyGroup.style.display = 'block';
+      }
+    }
+
+    roleAd.addEventListener('change', updateForm);
+    roleRider.addEventListener('change', updateForm);
+
+    // Al hacer submit: el form se envía a Google Forms vía el iframe oculto,
+    // y nosotros mostramos el mensaje de éxito después de un momento.
+    form.addEventListener('submit', function() {
+      // Forzar el valor del rol justo antes de enviar
+      rolHidden.value = roleRider.checked ? 'Repartidor' : 'Anunciante';
+
+      submitBtn.textContent = 'Enviando...';
+      submitBtn.disabled    = true;
+
+      setTimeout(() => {
+        form.style.display       = 'none';
+        successMsg.style.display = 'block';
+      }, 1000);
+    });
+
+    // Scroll suave
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
